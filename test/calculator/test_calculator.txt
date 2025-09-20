@@ -1,0 +1,4 @@
+3 + 4 * (2 - 1)
+10.5 / 2.1
+2 ** 3  // exponenciação
+15 // 4 // divisão inteira
