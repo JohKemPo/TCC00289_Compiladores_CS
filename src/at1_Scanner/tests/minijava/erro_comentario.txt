@@ -1,0 +1,8 @@
+/* Este é um comentário que começa
+   mas nunca termina...
+
+class Incomplete {
+    public int test() {
+        return 1;
+    }
+}

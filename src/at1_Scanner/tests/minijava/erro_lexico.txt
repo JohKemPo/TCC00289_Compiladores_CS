@@ -1,0 +1,8 @@
+class ErrorTest {
+    public static void main(String[] args) {
+        int a;
+        a = 10 % 2; // % não é um operador válido em MiniJava
+        int b;
+        b = a # 5; // # é um símbolo inválido
+    }
+}
