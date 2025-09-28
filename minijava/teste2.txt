@@ -1,0 +1,8 @@
+class Main {
+    public static void main(String[] args) {
+        int x;
+        x = 10;
+        @x = 20; // símbolo inválido '@'
+        System.out.println(x);
+    }
+}

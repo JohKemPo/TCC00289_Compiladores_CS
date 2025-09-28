@@ -1,0 +1,20 @@
+class Main {
+    public static void main(String[] args) {
+        int a;
+        int b;
+        a = 5 + 3 * (2 - 1);
+        if (a < 10 && true) {
+            b = a;
+        } else {
+            b = 0;
+        }
+        if (a < b) {
+            while (a < 20) {
+                a = a + 1;
+                System.out.println(a);
+            }
+        } else {
+            System.out.println(b);
+        }
+    }
+}
