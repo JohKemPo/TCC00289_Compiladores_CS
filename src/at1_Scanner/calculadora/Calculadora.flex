@@ -1,41 +1,48 @@
 package at1_Scanner.calculadora;
-import java.io.IOException;
+
+import java_cup.runtime.*;
 
 %%
 
 %class CalculadoraScanner
-%unicode
 %public
 %final
+%cup
+%function next_token
 %line
 %column
-%standalone
-%integer
+%unicode
+
+%{
+    private Symbol symbol(int type) {
+        return new Symbol(type, yyline, yycolumn);
+    }
+    private Symbol symbol(int type, Object value) {
+        return new Symbol(type, yyline, yycolumn, value);
+    }
+%}
 
 DIGITO          = [0-9]
 NUM_INT         = {DIGITO}+
 NUM_FLOAT       = {DIGITO}+ "." {DIGITO}+
+WHITESPACE      = [ \t\r\n]+
 
 %%
 
-{NUM_INT}       { System.out.println("NUM_INT: " + yytext()); return 1; }
+{NUM_INT}       { return symbol(CalcSym.NUM_INT, Integer.parseInt(yytext())); }
+{NUM_FLOAT}     { return symbol(CalcSym.NUM_FLOAT, Double.parseDouble(yytext())); }
+"("             { return symbol(CalcSym.PAREN_ESQ); }
+")"             { return symbol(CalcSym.PAREN_DIR); }
+"+"             { return symbol(CalcSym.MAIS); }
+"-"             { return symbol(CalcSym.MENOS); }
+"*"             { return symbol(CalcSym.MULT); }
+"/"             { return symbol(CalcSym.DIV); }
+"//"            { return symbol(CalcSym.INTDIV); }
+"**"            { return symbol(CalcSym.POT); }
 
-{NUM_FLOAT}     { System.out.println("NUM_FLOAT: " + yytext()); return 2; }
+{WHITESPACE}    
 
-"("             { System.out.println("PAREN_ESQ: ("); return 3; }
-")"             { System.out.println("PAREN_DIR: )"); return 4; }
-"+"             { System.out.println("MAIS: +"); return 5; }
-"-"             { System.out.println("MENOS: -"); return 6; }
-"*"             { System.out.println("MULT: *"); return 7; }
-"/"             { System.out.println("DIV: /"); return 8; }
-"//"            { System.out.println("INTDIV: //"); return 9; }
-"**"            { System.out.println("POT: **"); return 10; }
-
-// Ignorar espaços, tabs e quebras de linha
-[ \t\r\n]+   { /* nao faz nada */; }
-
-// Qualquer outro símbolo, erro léxico
-.               { System.err.println("Erro: simbolo invalido '" + yytext() +
-                                     "' na linha " + yyline + ", coluna " + yycolumn);
-                  return -1;
+.               { 
+                  System.err.println("Erro léxico: '" + yytext() + "' na linha " + (yyline + 1) + ", coluna " + (yycolumn + 1));
+                  return symbol(CalcSym.error);
                 }

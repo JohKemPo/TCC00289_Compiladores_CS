@@ -3,6 +3,8 @@ package at1_Scanner.calculadora;
 import java.io.FileReader;
 import java.io.IOException;
 
+import java_cup.runtime.Symbol;
+
 public class MainCalculadora {
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -17,9 +19,11 @@ public class MainCalculadora {
             
             CalculadoraScanner scanner = new CalculadoraScanner(reader);
             
-            while (!scanner.yyatEOF()) {
-                scanner.yylex();
-            }
+            Symbol token;
+            do {
+                token = scanner.next_token();
+                // Processar token se não for EOF
+            } while (token.sym != CalcSym.EOF);
             
             System.out.println("------------------------------------");
             System.out.println("Análise concluída.");

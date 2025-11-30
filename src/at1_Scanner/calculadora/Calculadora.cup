@@ -1,0 +1,35 @@
+package at1_Scanner.calculadora;
+
+import java_cup.runtime.*;
+
+terminal Integer NUM_INT;
+terminal Double NUM_FLOAT;
+terminal PAREN_ESQ, PAREN_DIR, MAIS, MENOS, MULT, DIV, INTDIV, POT;
+
+non terminal Double expr;
+
+precedence left MAIS, MENOS;
+precedence left MULT, DIV, INTDIV; 
+precedence right POT;
+
+start with expr;
+
+expr ::= expr:e1 MAIS expr:e2
+        {: RESULT = e1 + e2; :}
+      | expr:e1 MENOS expr:e2  
+        {: RESULT = e1 - e2; :}
+      | expr:e1 MULT expr:e2
+        {: RESULT = e1 * e2; :}
+      | expr:e1 DIV expr:e2
+        {: RESULT = e1 / e2; :}
+      | expr:e1 INTDIV expr:e2
+        {: RESULT = (double)(e1.intValue() / e2.intValue()); :}
+      | expr:e1 POT expr:e2
+        {: RESULT = Math.pow(e1, e2); :}
+      | PAREN_ESQ expr:e PAREN_DIR
+        {: RESULT = e; :}
+      | NUM_INT:i
+        {: RESULT = i.doubleValue(); :}
+      | NUM_FLOAT:f
+        {: RESULT = f; :}
+      ;
