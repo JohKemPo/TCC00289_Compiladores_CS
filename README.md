@@ -60,12 +60,14 @@ java -cp "src/at1_Scanner/build:lib/java-cup-11b-runtime.jar" at1_Scanner.minija
 chmod +x build.sh
 ```
 
-## Compilando os parser usando .cup ( Versao similar do YACC ( CMINUS ) porem para minijava ( JAVACUP ))
+## Compilando os parser usando .cup 
+
+*`( Versao similar do YACC ( CMINUS ) porem para minijava ( JAVACUP ))`*
 
 
 ```
 cd TCC00289_Compiladores_CS/
-build.sh
+./build.sh
 ```
 
 
@@ -76,7 +78,10 @@ build.sh
 ```
 java -cp "build:lib/java-cup-11b-runtime.jar" at1_Scanner.calculadora.MainCalculadoraComParser src/at1_Scanner/tests/calculadora/teste_calc.txt
 ```
+
+```
 java -cp "build:lib/java-cup-11b-runtime.jar" at1_Scanner.minijava.MainMiniJavaComParser
+```
 
 
 -------------------------

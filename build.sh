@@ -20,7 +20,7 @@ mv CalcSym.java src/at1_Scanner/calculadora/
 
 java -jar $JFLEX_JAR src/at1_Scanner/calculadora/Calculadora.flex
 
-echo "=== Corrigindo CalculadoraScanner ==="
+echo "=== CalculadoraScanner ==="
 sed -i 's/sym.EOF/CalcSym.EOF/g' src/at1_Scanner/calculadora/CalculadoraScanner.java
 
 echo "=== Building MiniJava ==="
