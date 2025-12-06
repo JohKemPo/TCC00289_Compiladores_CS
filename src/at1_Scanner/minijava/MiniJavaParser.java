@@ -40,8 +40,8 @@ public class MiniJavaParser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\024\000\004\004\006\001\002\000\004\002\026\001" +
-    "\002\000\004\002\000\001\002\000\004\020\007\001\002" +
+    "\000\024\000\004\004\005\001\002\000\004\002\026\001" +
+    "\002\000\004\020\007\001\002\000\004\002\000\001\002" +
     "\000\004\012\010\001\002\000\004\005\011\001\002\000" +
     "\004\006\012\001\002\000\004\007\013\001\002\000\004" +
     "\010\014\001\002\000\004\014\015\001\002\000\004\011" +
@@ -57,7 +57,7 @@ public class MiniJavaParser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\024\000\006\002\003\003\004\001\001\000\002\001" +
+    "\000\024\000\006\002\003\003\005\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
@@ -131,7 +131,7 @@ class CUP$MiniJavaParser$actions {
               Object RESULT =null;
 		int start_valleft = ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.elementAt(CUP$MiniJavaParser$top-1)).left;
 		int start_valright = ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.elementAt(CUP$MiniJavaParser$top-1)).right;
-		String start_val = (String)((java_cup.runtime.Symbol) CUP$MiniJavaParser$stack.elementAt(CUP$MiniJavaParser$top-1)).value;
+		Integer start_val = (Integer)((java_cup.runtime.Symbol) CUP$MiniJavaParser$stack.elementAt(CUP$MiniJavaParser$top-1)).value;
 		RESULT = start_val;
               CUP$MiniJavaParser$result = parser.getSymbolFactory().newSymbol("$START",0, ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.elementAt(CUP$MiniJavaParser$top-1)), ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.peek()), RESULT);
             }
@@ -140,24 +140,21 @@ class CUP$MiniJavaParser$actions {
           return CUP$MiniJavaParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 1: // program ::= mainClass 
+          case 1: // program ::= main_class 
             {
-              String RESULT =null;
-		int mcleft = ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.peek()).left;
-		int mcright = ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.peek()).right;
-		String mc = (String)((java_cup.runtime.Symbol) CUP$MiniJavaParser$stack.peek()).value;
+              Integer RESULT =null;
 		 
-        System.out.println("=== Programa MiniJava aceito ===");
-        RESULT = "Programa: " + mc;
+        System.out.println("PROGRAMA MINIJAVA ACEITO!");
+        RESULT = 1;
     
               CUP$MiniJavaParser$result = parser.getSymbolFactory().newSymbol("program",0, ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.peek()), RESULT);
             }
           return CUP$MiniJavaParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 2: // mainClass ::= CLASS_DECL IDENTIFIER LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACK RBRACK IDENTIFIER RPAREN LBRACE RBRACE RBRACE 
+          case 2: // main_class ::= CLASS_DECL IDENTIFIER LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACK RBRACK IDENTIFIER RPAREN LBRACE RBRACE RBRACE 
             {
-              String RESULT =null;
+              Integer RESULT =null;
 		int classNameleft = ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.elementAt(CUP$MiniJavaParser$top-14)).left;
 		int classNameright = ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.elementAt(CUP$MiniJavaParser$top-14)).right;
 		String className = (String)((java_cup.runtime.Symbol) CUP$MiniJavaParser$stack.elementAt(CUP$MiniJavaParser$top-14)).value;
@@ -165,9 +162,11 @@ class CUP$MiniJavaParser$actions {
 		int argNameright = ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.elementAt(CUP$MiniJavaParser$top-4)).right;
 		String argName = (String)((java_cup.runtime.Symbol) CUP$MiniJavaParser$stack.elementAt(CUP$MiniJavaParser$top-4)).value;
 		 
-        RESULT = "MainClass[" + className + "]"; 
+        System.out.println("Classe principal: " + className);
+        System.out.println("Argumento do main: " + argName);
+        RESULT = 1;
     
-              CUP$MiniJavaParser$result = parser.getSymbolFactory().newSymbol("mainClass",1, ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.elementAt(CUP$MiniJavaParser$top-15)), ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.peek()), RESULT);
+              CUP$MiniJavaParser$result = parser.getSymbolFactory().newSymbol("main_class",1, ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.elementAt(CUP$MiniJavaParser$top-15)), ((java_cup.runtime.Symbol)CUP$MiniJavaParser$stack.peek()), RESULT);
             }
           return CUP$MiniJavaParser$result;
 
