@@ -98,6 +98,3 @@ fi
 
 echo ""
 echo "=== BUILD CONCLUÍDO ==="
-echo "Para testar:"
-echo "  Calculadora: java -cp \"build:lib/java-cup-11b-runtime.jar\" at1_Scanner.calculadora.MainCalculadoraComParser src/at1_Scanner/tests/calculadora/teste1.txt"
-echo "  MiniJava:    java -cp \"build:lib/java-cup-11b-runtime.jar\" at1_Scanner.minijava.MainMiniJavaComParser teste.java"
