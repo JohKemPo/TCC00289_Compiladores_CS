@@ -1,0 +1,35 @@
+package at1_Scanner.minijava;
+
+import java_cup.runtime.*;
+
+// 1. DECLARAR terminais
+terminal CLASS_DECL, PUBLIC, STATIC, VOID, MAIN, STRING;
+terminal LBRACE, RBRACE, LPAREN, RPAREN, LBRACK, RBRACK;
+terminal String IDENTIFIER;
+
+// 2. DECLARAR não-terminais ANTES de usar
+non terminal Integer program;
+non terminal Integer main_class;
+
+// 3. Especificar símbolo inicial
+start with program;
+
+// 4. Produções
+program ::= main_class
+    {: 
+        System.out.println("PROGRAMA MINIJAVA ACEITO!");
+        RESULT = 1;
+    :}
+;
+
+main_class ::= 
+    CLASS_DECL IDENTIFIER:className LBRACE 
+    PUBLIC STATIC VOID MAIN LPAREN STRING LBRACK RBRACK IDENTIFIER:argName RPAREN 
+    LBRACE RBRACE 
+    RBRACE
+    {: 
+        System.out.println("Classe principal: " + className);
+        System.out.println("Argumento do main: " + argName);
+        RESULT = 1;
+    :}
+;

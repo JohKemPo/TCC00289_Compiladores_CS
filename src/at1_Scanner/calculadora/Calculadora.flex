@@ -1,41 +1,90 @@
 package at1_Scanner.calculadora;
-import java.io.IOException;
+
+import java_cup.runtime.*;
 
 %%
 
 %class CalculadoraScanner
-%unicode
 %public
 %final
+%cup
+%function next_token
 %line
 %column
-%standalone
-%integer
+%unicode
+
+%{
+    private Symbol symbol(int type) {
+        return new Symbol(type, yyline, yycolumn);
+    }
+    private Symbol symbol(int type, Object value) {
+        return new Symbol(type, yyline, yycolumn, value);
+    }
+
+    private void printToken(String tokenName, Object value, int line, int column) {
+        if (value != null) {
+            System.out.printf("%-12s: '%s' (valor: %s) [linha %d, coluna %d]%n",
+                tokenName, yytext(), value, line + 1, column + 1);
+        } else {
+            System.out.printf("%-12s: '%s' [linha %d, coluna %d]%n",
+                tokenName, yytext(), line + 1, column + 1);
+        }
+    }
+%}
 
 DIGITO          = [0-9]
 NUM_INT         = {DIGITO}+
 NUM_FLOAT       = {DIGITO}+ "." {DIGITO}+
+WHITESPACE      = [ \t\r\n]+
 
 %%
 
-{NUM_INT}       { System.out.println("NUM_INT: " + yytext()); return 1; }
+{NUM_INT}       { 
+                  int value = Integer.parseInt(yytext());
+                  printToken("NUM_INT", value, yyline, yycolumn);
+                  return symbol(CalcSym.NUM_INT, value); 
+                }
+{NUM_FLOAT}     { 
+                  double value = Double.parseDouble(yytext());
+                  printToken("NUM_FLOAT", value, yyline, yycolumn);
+                  return symbol(CalcSym.NUM_FLOAT, value); 
+                }
+"("             { 
+                  printToken("PAREN_ESQ", null, yyline, yycolumn);
+                  return symbol(CalcSym.PAREN_ESQ); 
+                }
+")"             { 
+                  printToken("PAREN_DIR", null, yyline, yycolumn);
+                  return symbol(CalcSym.PAREN_DIR); 
+                }
+"+"             { 
+                  printToken("MAIS", null, yyline, yycolumn);
+                  return symbol(CalcSym.MAIS); 
+                }
+"-"             { 
+                  printToken("MENOS", null, yyline, yycolumn);
+                  return symbol(CalcSym.MENOS); 
+                }
+"*"             { 
+                  printToken("MULT", null, yyline, yycolumn);
+                  return symbol(CalcSym.MULT); 
+                }
+"/"             { 
+                  printToken("DIV", null, yyline, yycolumn);
+                  return symbol(CalcSym.DIV); 
+                }
+"//"            { 
+                  printToken("INTDIV", null, yyline, yycolumn);
+                  return symbol(CalcSym.INTDIV); 
+                }
+"**"            { 
+                  printToken("POT", null, yyline, yycolumn);
+                  return symbol(CalcSym.POT); 
+                }
 
-{NUM_FLOAT}     { System.out.println("NUM_FLOAT: " + yytext()); return 2; }
+{WHITESPACE}    
 
-"("             { System.out.println("PAREN_ESQ: ("); return 3; }
-")"             { System.out.println("PAREN_DIR: )"); return 4; }
-"+"             { System.out.println("MAIS: +"); return 5; }
-"-"             { System.out.println("MENOS: -"); return 6; }
-"*"             { System.out.println("MULT: *"); return 7; }
-"/"             { System.out.println("DIV: /"); return 8; }
-"//"            { System.out.println("INTDIV: //"); return 9; }
-"**"            { System.out.println("POT: **"); return 10; }
-
-// Ignorar espaços, tabs e quebras de linha
-[ \t\r\n]+   { /* nao faz nada */; }
-
-// Qualquer outro símbolo, erro léxico
-.               { System.err.println("Erro: simbolo invalido '" + yytext() +
-                                     "' na linha " + yyline + ", coluna " + yycolumn);
-                  return -1;
+.               { 
+                  System.err.println("Erro léxico: '" + yytext() + "' na linha " + (yyline + 1) + ", coluna " + (yycolumn + 1));
+                  return symbol(CalcSym.error);
                 }
