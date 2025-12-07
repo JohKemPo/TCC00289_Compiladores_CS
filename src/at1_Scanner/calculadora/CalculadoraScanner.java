@@ -285,6 +285,16 @@ public final class CalculadoraScanner implements java_cup.runtime.Scanner {
         return new Symbol(type, yyline, yycolumn, value);
     }
 
+    private void printToken(String tokenName, Object value, int line, int column) {
+        if (value != null) {
+            System.out.printf("%-12s: '%s' (valor: %s) [linha %d, coluna %d]%n",
+                tokenName, yytext(), value, line + 1, column + 1);
+        } else {
+            System.out.printf("%-12s: '%s' [linha %d, coluna %d]%n",
+                tokenName, yytext(), line + 1, column + 1);
+        }
+    }
+
 
   /**
    * Creates a new scanner
@@ -710,37 +720,45 @@ public final class CalculadoraScanner implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { return symbol(CalcSym.PAREN_ESQ);
+            { printToken("PAREN_ESQ", null, yyline, yycolumn);
+                  return symbol(CalcSym.PAREN_ESQ);
             }
           // fall through
           case 12: break;
           case 2:
-            { return symbol(CalcSym.PAREN_DIR);
+            { printToken("PAREN_DIR", null, yyline, yycolumn);
+                  return symbol(CalcSym.PAREN_DIR);
             }
           // fall through
           case 13: break;
           case 3:
-            { return symbol(CalcSym.MULT);
+            { printToken("MULT", null, yyline, yycolumn);
+                  return symbol(CalcSym.MULT);
             }
           // fall through
           case 14: break;
           case 4:
-            { return symbol(CalcSym.MAIS);
+            { printToken("MAIS", null, yyline, yycolumn);
+                  return symbol(CalcSym.MAIS);
             }
           // fall through
           case 15: break;
           case 5:
-            { return symbol(CalcSym.MENOS);
+            { printToken("MENOS", null, yyline, yycolumn);
+                  return symbol(CalcSym.MENOS);
             }
           // fall through
           case 16: break;
           case 6:
-            { return symbol(CalcSym.DIV);
+            { printToken("DIV", null, yyline, yycolumn);
+                  return symbol(CalcSym.DIV);
             }
           // fall through
           case 17: break;
           case 7:
-            { return symbol(CalcSym.NUM_INT, Integer.parseInt(yytext()));
+            { int value = Integer.parseInt(yytext());
+                  printToken("NUM_INT", value, yyline, yycolumn);
+                  return symbol(CalcSym.NUM_INT, value);
             }
           // fall through
           case 18: break;
@@ -751,17 +769,21 @@ public final class CalculadoraScanner implements java_cup.runtime.Scanner {
           // fall through
           case 19: break;
           case 9:
-            { return symbol(CalcSym.POT);
+            { printToken("POT", null, yyline, yycolumn);
+                  return symbol(CalcSym.POT);
             }
           // fall through
           case 20: break;
           case 10:
-            { return symbol(CalcSym.INTDIV);
+            { printToken("INTDIV", null, yyline, yycolumn);
+                  return symbol(CalcSym.INTDIV);
             }
           // fall through
           case 21: break;
           case 11:
-            { return symbol(CalcSym.NUM_FLOAT, Double.parseDouble(yytext()));
+            { double value = Double.parseDouble(yytext());
+                  printToken("NUM_FLOAT", value, yyline, yycolumn);
+                  return symbol(CalcSym.NUM_FLOAT, value);
             }
           // fall through
           case 22: break;

@@ -20,6 +20,16 @@ import java_cup.runtime.*;
     private Symbol symbol(int type, Object value) {
         return new Symbol(type, yyline, yycolumn, value);
     }
+
+    private void printToken(String tokenName, Object value, int line, int column) {
+        if (value != null) {
+            System.out.printf("%-12s: '%s' (valor: %s) [linha %d, coluna %d]%n",
+                tokenName, yytext(), value, line + 1, column + 1);
+        } else {
+            System.out.printf("%-12s: '%s' [linha %d, coluna %d]%n",
+                tokenName, yytext(), line + 1, column + 1);
+        }
+    }
 %}
 
 DIGITO          = [0-9]
@@ -29,16 +39,48 @@ WHITESPACE      = [ \t\r\n]+
 
 %%
 
-{NUM_INT}       { return symbol(CalcSym.NUM_INT, Integer.parseInt(yytext())); }
-{NUM_FLOAT}     { return symbol(CalcSym.NUM_FLOAT, Double.parseDouble(yytext())); }
-"("             { return symbol(CalcSym.PAREN_ESQ); }
-")"             { return symbol(CalcSym.PAREN_DIR); }
-"+"             { return symbol(CalcSym.MAIS); }
-"-"             { return symbol(CalcSym.MENOS); }
-"*"             { return symbol(CalcSym.MULT); }
-"/"             { return symbol(CalcSym.DIV); }
-"//"            { return symbol(CalcSym.INTDIV); }
-"**"            { return symbol(CalcSym.POT); }
+{NUM_INT}       { 
+                  int value = Integer.parseInt(yytext());
+                  printToken("NUM_INT", value, yyline, yycolumn);
+                  return symbol(CalcSym.NUM_INT, value); 
+                }
+{NUM_FLOAT}     { 
+                  double value = Double.parseDouble(yytext());
+                  printToken("NUM_FLOAT", value, yyline, yycolumn);
+                  return symbol(CalcSym.NUM_FLOAT, value); 
+                }
+"("             { 
+                  printToken("PAREN_ESQ", null, yyline, yycolumn);
+                  return symbol(CalcSym.PAREN_ESQ); 
+                }
+")"             { 
+                  printToken("PAREN_DIR", null, yyline, yycolumn);
+                  return symbol(CalcSym.PAREN_DIR); 
+                }
+"+"             { 
+                  printToken("MAIS", null, yyline, yycolumn);
+                  return symbol(CalcSym.MAIS); 
+                }
+"-"             { 
+                  printToken("MENOS", null, yyline, yycolumn);
+                  return symbol(CalcSym.MENOS); 
+                }
+"*"             { 
+                  printToken("MULT", null, yyline, yycolumn);
+                  return symbol(CalcSym.MULT); 
+                }
+"/"             { 
+                  printToken("DIV", null, yyline, yycolumn);
+                  return symbol(CalcSym.DIV); 
+                }
+"//"            { 
+                  printToken("INTDIV", null, yyline, yycolumn);
+                  return symbol(CalcSym.INTDIV); 
+                }
+"**"            { 
+                  printToken("POT", null, yyline, yycolumn);
+                  return symbol(CalcSym.POT); 
+                }
 
 {WHITESPACE}    
 
